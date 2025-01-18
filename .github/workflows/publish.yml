@@ -38,4 +38,4 @@ jobs:
     - name: Upload to PyPI
       uses: pypa/gh-action-pypi-publish@v1
       with:
-        password: ${{ secrets.PYPI_API_TOKEN }}assword: ${{ secrets.PYPI_API_TOKEN }}
+        password: ${{ secrets.PYPI_API_TOKEN }}
