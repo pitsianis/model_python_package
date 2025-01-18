@@ -28,7 +28,7 @@ class MesonBuild(build_ext):
 
 # Define the setup configuration
 setup(
-    name="my_python_package",
+    name="model_python_package",
     version="0.1.0",
     description="Python package with a C library built using Meson and FFTW",
     ext_modules=[Extension('mylib', sources=[])],
