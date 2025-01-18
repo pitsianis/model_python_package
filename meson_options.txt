@@ -1,0 +1,1 @@
+option('optimization', type: 'string', value: '2', description: 'Optimization level')

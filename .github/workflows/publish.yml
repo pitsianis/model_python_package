@@ -1,0 +1,41 @@
+name: Build and Publish Wheels
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        if [ $RUNNER_OS == 'Linux' ]; then
+          sudo apt-get update && sudo apt-get install -y libfftw3-dev meson ninja-build
+        elif [ $RUNNER_OS == 'macOS' ]; then
+          brew install fftw meson ninja
+        elif [ $RUNNER_OS == 'Windows' ]; then
+          choco install meson ninja fftw
+        fi
+
+    - name: Build the wheel
+      run: python setup.py bdist_wheel
+
+    - name: Upload to PyPI
+      uses: pypa/gh-action-pypi-publish@v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}assword: ${{ secrets.PYPI_API_TOKEN }}
